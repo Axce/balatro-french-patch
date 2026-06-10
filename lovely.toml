@@ -1,0 +1,26 @@
+[manifest]
+version = "0.0.1"
+
+[[patches]]
+[patches.module]
+source = "localization/fr.lua"
+before = "game.lua"
+name = "fr_patch"
+
+[[patches]]
+[patches.module]
+source = "utils/deepmerge.lua"
+before = "game.lua"
+name = "deepmerge"
+
+[[patches]]
+[patches.pattern]
+target = "game.lua"
+pattern = '''init_localization()'''
+position = "before"
+match_indent = true
+payload = '''
+    require("deepmerge")
+    fr_patch = require("fr_patch")
+    deep_merge(self.localization, fr_patch)
+'''
