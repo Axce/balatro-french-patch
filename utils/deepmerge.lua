@@ -1,6 +1,10 @@
 function deep_merge(t1, t2)
     for k, v in pairs(t2) do
-        if (type(v) == "table") and (type(t1[k] or false) == "table") then
+        if
+            (type(v) == "table")
+            and (type(t1[k] or false) == "table")
+            and (k ~= "text")
+        then
             deep_merge(t1[k], t2[k])
         else
             t1[k] = v
